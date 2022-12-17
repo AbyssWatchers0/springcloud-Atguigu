@@ -19,7 +19,7 @@ public class PaymentController {
     PaymentService paymentService;
 
     @PostMapping("/payment/create")
-    public CommonResult create(Payment payment) {
+    public CommonResult create(@RequestBody Payment payment) {
         int res = paymentService.create(payment);
         log.info("插入结果：" + res);
         if (res > 0) {
@@ -36,7 +36,7 @@ public class PaymentController {
         if (res != null) {
             return new CommonResult<>(200, "查询成功", res);
         } else {
-            return new CommonResult<>(444, "查询失败");
+            return new CommonResult<>(441, "查询失败");
         }
     }
 }
