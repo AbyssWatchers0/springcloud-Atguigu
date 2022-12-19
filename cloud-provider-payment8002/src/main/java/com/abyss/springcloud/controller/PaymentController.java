@@ -6,7 +6,6 @@ import com.abyss.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -18,13 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentController {
     @Value("${server.port}")
     private String serverPort;
+
     @Autowired
     PaymentService paymentService;
 
     @PostMapping("/payment/create")
     public CommonResult create(@RequestBody Payment payment) {
         int res = paymentService.create(payment);
-        log.info("插入结果：" + res);
+        log.info(serverPort+"插入结果：" + res);
         if (res > 0) {
             return new CommonResult(200, "插入数据成功:"+serverPort, res);
         } else {
@@ -35,7 +35,7 @@ public class PaymentController {
     @GetMapping("/payment/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment res = paymentService.getPaymentById(id);
-        log.info("查询到的数据为：" + res);
+        log.info(serverPort+"查询到的数据为：" + res);
         if (res != null) {
             return new CommonResult<>(200, "查询成功:"+serverPort, res);
         } else {
