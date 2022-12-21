@@ -3,14 +3,21 @@ package com.abyss.springcloud.controller;
 
 import com.abyss.springcloud.entities.CommonResult;
 import com.abyss.springcloud.entities.Payment;
+import com.abyss.springcloud.lb.MyLb;
+import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+import java.util.List;
 
 /**
  * @author Abyss Watchers
@@ -42,5 +49,21 @@ public class OrderController {
         } else {
             return new CommonResult<>(entity.getStatusCodeValue(), "RPC error");
         }
+    }
+
+    @Autowired
+    DiscoveryClient discoveryClient;
+    @Autowired
+    MyLb myLb;
+
+    @GetMapping("/consumer/payment/lb")
+    public CommonResult<String> lbTest() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        if (instances == null || instances.size() == 0) {
+            return new CommonResult<>(400, "没有找到微服务");
+        }
+        ServiceInstance instance = myLb.instance(instances);
+        URI uri = instance.getUri();
+        return restTemplate.getForObject(uri + "/payment/lb", CommonResult.class);
     }
 }

@@ -68,4 +68,9 @@ public class PaymentController {
 
         return discoveryClient;
     }
+
+    @GetMapping("/payment/lb")
+    public CommonResult<String> testLb() {
+        return new CommonResult<>(200, "ok", serverPort);
+    }
 }

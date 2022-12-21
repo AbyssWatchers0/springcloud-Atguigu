@@ -19,6 +19,7 @@
         <module>cloud-zookeeper-consumer-order81</module>
         <module>cloud-consul-provider-payment8006</module>
         <module>cloud-consul-comsumer-order81</module>
+        <module>cloud-feign-consumer-order81</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
