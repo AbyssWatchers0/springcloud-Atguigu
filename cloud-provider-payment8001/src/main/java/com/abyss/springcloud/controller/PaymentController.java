@@ -73,4 +73,14 @@ public class PaymentController {
     public CommonResult<String> testLb() {
         return new CommonResult<>(200, "ok", serverPort);
     }
+
+    @GetMapping("/payment/timeout")
+    public String feignTimeoutTest() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "finish sleep";
+    }
 }
