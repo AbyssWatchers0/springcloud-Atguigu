@@ -22,6 +22,7 @@
         <module>cloud-feign-consumer-order81</module>
         <module>cloud-hytrix-provider-payment8001</module>
         <module>cloud-hystrix-fiegn-consumer-order80</module>
+        <module>cloud-hystrix-consumer-dashboard9001</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->

@@ -4,6 +4,7 @@ import com.abyss.springcloud.services.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +34,12 @@ public class PaymentController {
         String res = paymentService.paymentIfo_Timeout(id);
         log.info("result:" + res);
         return res;
+    }
+
+    @GetMapping("/payment/breaker/{id}")
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id) {
+        String s = paymentService.paymentCircuitBreaker(id);
+        log.info(s);
+        return s;
     }
 }
