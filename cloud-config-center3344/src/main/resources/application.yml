@@ -1,0 +1,25 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/AbyssWatchers0/springcloud-config.git
+          # 搜索目录
+          search-paths:
+            - springcloud-config
+          # 跳过ssl检测
+          skip-ssl-validation: true
+          default-label: main
+      # 读取分支
+      label: main
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
