@@ -16,6 +16,12 @@ spring:
           default-label: main
       # 读取分支
       label: main
+  #rabbitmq相关配置 15672是Web管理界面的端口；5672是MQ访问的端口
+  rabbitmq:
+    host: 192.168.10.128
+    port: 5672
+    username: admin
+    password: 123
 
 eureka:
   client:
@@ -23,3 +29,11 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka
+
+
+# rabbitmq相关配置,暴露bus刷新配置的端点
+management:
+  endpoints: #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: 'bus-refresh'
