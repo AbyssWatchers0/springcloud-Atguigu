@@ -1,0 +1,36 @@
+server:
+  port: 2001
+spring:
+  application:
+    name: seata-order-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/seata_order?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    alibaba:
+      seata:
+        # 自定义事务组名称需要与file.conf 里 service 中的 vgroup_mapping.my_test_tx_group 对应
+        tx-service-group: abyss_tx_group
+
+
+ribbon:
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ReadTimeout: 3000
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 3000
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.abyss.cloudalibaba.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    io:
+      seata: info
